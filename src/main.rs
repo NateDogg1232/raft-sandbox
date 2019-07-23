@@ -39,9 +39,9 @@ fn main() {
         let mut node = RawNode::new(&node_config, storage, vec![]).unwrap();
         // We'll spawn a thread for this node
         let handle = thread::spawn(move || {
-            thread::sleep(time::Duration::from_millis(10));
             // We'll have the node wait for a message
             loop {
+                thread::sleep(time::Duration::from_millis(10));
                 match rx.try_recv() {
                     Ok(msg) => node.step(msg).unwrap(),
                     Err(mpsc::TryRecvError::Empty) => break,
